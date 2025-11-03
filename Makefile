@@ -1,2 +1,2 @@
 all:
-	g++ example/main.cpp -o main
+	g++ */*.cpp -o main -Iinclude
