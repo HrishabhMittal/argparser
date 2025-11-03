@@ -3,7 +3,7 @@
 #include <vector>
 typedef std::map<char,bool> flags;
 typedef std::map<std::string,std::string> args;
-
+#include <iostream>
 
 class ArgParser {
     int argc;
@@ -25,12 +25,12 @@ public:
         return others;
     }
     void addArg(std::string flag,char charflag='_',std::string description="",std::string _default="") {
-        a.insert({flag,_default});
-        if (charflag!='_') flagmap.insert({charflag,flag});
-        if (description!="") descmap.insert({flag,description});
+        a[flag]=_default;
+        if (charflag!='_') flagmap[charflag]=flag;
+        if (description!="") descmap[flag]=description;
     }
     void addFlag(char c) {
-        f.insert({c,0});
+        f[c]=0;
     }
     void addHelp() {
         addArg("help",'h',"");
@@ -78,7 +78,6 @@ public:
                         a[flagmap[arg[1]]]=arg.substr(2);
                     } else {
                         if (f.count(arg[1])) {
-                            if (flagmap.count(arg[1])==0) return false;
                             f[arg[1]]=1;
                         } else {
                             if (i+1>=argc) return false;
