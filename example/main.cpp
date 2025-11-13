@@ -1,4 +1,4 @@
-#include "argparse.hpp"
+#include "../include/argparse.hpp"
 #include <iostream>
 
 int main(int argc, char** argv) {
@@ -12,17 +12,18 @@ int main(int argc, char** argv) {
         std::cout << parser.getHelpMessage();
         return 1;
     }
-    const auto& args = parser.Args();
-    const auto& flags = parser.Flags();
-    std::cout << "Input: " << args.at("input") << "\n";
-    std::cout << "Output: " << args.at("output") << "\n";
-    std::cout << "Verbose flag: " << (flags.at('v') ? "set" : "not set") << "\n";
-    const auto& others = parser.Others();
-    if (!others.empty()) {
-        std::cout << "Other arguments:\n";
-        for (const auto& other : others) {
-            std::cout << "  " << other << "\n";
-        }
-    }
+    std::cout << parser.getHelpMessage();
+    // const auto& args = parser.Args();
+    // const auto& flags = parser.Flags();
+    // std::cout << "Input: " << args.at("input") << "\n";
+    // std::cout << "Output: " << args.at("output") << "\n";
+    // std::cout << "Verbose flag: " << (flags.at('v') ? "set" : "not set") << "\n";
+    // const auto& others = parser.Others();
+    // if (!others.empty()) {
+    //     std::cout << "Other arguments:\n";
+    //     for (const auto& other : others) {
+    //         std::cout << "  " << other << "\n";
+    //     }
+    // }
     return 0;
 }

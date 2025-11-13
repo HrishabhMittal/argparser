@@ -1,4 +1,5 @@
 #include "../include/argparse.hpp"
+#include <string>
 ArgParser::ArgParser(int argc,char**argv): argc(argc),argv(argv) {}
 const flags& ArgParser::Flags() const {
     return f;
@@ -14,26 +15,28 @@ void ArgParser::addArg(std::string flag,char charflag,std::string description,st
     if (charflag!='_') flagmap[charflag]=flag;
     if (description!="") descmap[flag]=description;
 }
-void ArgParser::addFlag(char c) {
+void ArgParser::addFlag(char c,std::string description) {
     f[c]=0;
+    std::string s;
+    s+=c;
+    flagmap[c]=s;
+    if (description!="") descmap[s]=description;
 }
 void ArgParser::addHelp() {
-    addArg("help",'h',"");
+    addFlag('h',"display this message");
 }
 std::string ArgParser::getHelpMessage() {
     std::string msg="Options:\n";
-    for (const auto& p:a) {
-        msg+="  --"+p.first;
-        for (const auto& q:flagmap) {
-            if (q.second==p.first) {
-                msg+=", -";
-                msg+=q.first;
-                msg+="    ";
-                msg+=descmap[p.first];
-                break;
-            }
+    for (auto& i:flagmap) {
+        msg+=" -";
+        msg+=i.first;
+        if (i.second.size()==1&&i.second[0]==i.first) {
+            msg+="            ";   
+        } else {
+            msg+=", --"+i.second+"    ";
         }
-        msg+="\n";
+        if (descmap.count(i.second)) msg+=descmap.at(i.second);
+        msg+='\n';
     }
     return msg;
 }

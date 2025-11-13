@@ -3,7 +3,6 @@
 #include <vector>
 typedef std::map<char,bool> flags;
 typedef std::map<std::string,std::string> args;
-#include <iostream>
 
 class ArgParser {
     int argc;
@@ -19,7 +18,7 @@ public:
     const args& Args() const;
     const std::vector<std::string>& Others() const;
     void addArg(std::string flag,char charflag='_',std::string description="",std::string _default="");
-    void addFlag(char c);
+    void addFlag(char c,std::string description="");
     void addHelp();
     std::string getHelpMessage();
     bool parse();
